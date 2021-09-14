@@ -1,6 +1,6 @@
 <?php
 
-namespace Hsy\Shipping\Driver;
+namespace Hsy\Shipping\Drivers;
 
 use Hsy\Shipping\Contracts\CartInterface;
 use Hsy\Shipping\Contracts\DriverInterface;

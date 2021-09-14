@@ -15,45 +15,40 @@ class ShippingSystem
     /**
      * @var array
      */
-    private $selectedDrivers;
+    private $userConfiguration;
 
-    public function __construct($cart, $from, $to, $selectedDrivers = [])
+    public function __construct($cart, $from, $to, $userConfiguration = [])
     {
         $this->cart = $cart;
         $this->from = $from;
         $this->to = $to;
-        $this->selectedDrivers = $selectedDrivers;
+        $this->userConfiguration = $userConfiguration;
     }
 
-    public function setSelectedDrivers(array $drivers)
-    {
-        $this->selectedDrivers = $drivers;
-    }
-
-    private function getNecessaryDrivers(): array
+    private function getUserSelectedDrivers(): array
     {
         $drivers = [];
-        foreach ($this->selectedDrivers as $driver) {
-            $drivers[] = $this->makeDriverClass($driver);
+        foreach ($this->userConfiguration as $config) {
+            $drivers[] = $this->makeDriverClass($config["driver"], $config["config"]);
         }
 
         return $drivers;
     }
 
-    private function makeDriverClass($driver)
+    private function makeDriverClass($driver, $config)
     {
-        $class = config("shipping.map.", $driver["name"]);
+        $class = "Hsy\Shipping\Drivers\PeykMotori";
         return new $class(
             $this->cart,
             $this->from,
             $this->to,
-            $driver["configuration"]
+            $config
         );
     }
 
     public function getShipment($onlyAvailableDrivers = true)
     {
-        $drivers = $this->getNecessaryDrivers();
+        $drivers = $this->getUserSelectedDrivers();
 
         if ($onlyAvailableDrivers) {
             $drivers->reject(function ($driver) {

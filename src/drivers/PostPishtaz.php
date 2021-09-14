@@ -1,6 +1,6 @@
 <?php
 
-namespace Hsy\Shipping\Driver;
+namespace Hsy\Shipping\Drivers;
 
 class PostPishtaz extends Driver
 {
