@@ -25,8 +25,8 @@ class ShippingTest extends TestCase
                 ]
             ],
             [
-                "driver" => "PostSefareshi",
-                "title" => "پست سفارشی",
+                "driver" => "post-pishtaz",
+                "title" => "پست پیشتاز",
                 "config" => [
                     "prices" => [
                         "1" => [
@@ -57,7 +57,9 @@ class ShippingTest extends TestCase
         $to = 10;
 
         $shipping = new ShippingSystem($cart, $from, $to, $userConfiguration);
+        $shipping = $shipping->getShipment();
 
-        $shipping->getShipment();
+        dd($shipping);
+
     }
 }

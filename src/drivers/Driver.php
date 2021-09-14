@@ -12,8 +12,8 @@ abstract class Driver implements DriverInterface
     protected $cart;
     protected $configuration;
 
-    public $cost;
-    public $available;
+    protected $cost;
+    protected $available = false;
 
     public function __construct(CartInterface $cart, $from, $to, $configuration)
     {
@@ -22,8 +22,9 @@ abstract class Driver implements DriverInterface
         $this->to = $to;
         $this->configuration = $configuration;
 
-        $this->checkAvailability();
-        $this->calcCost();
+        $this->available = $this->checkAvailability();
+        if ($this->isAvailable())
+            $this->cost = $this->calcCost();
     }
 
     public function getCost(): int
@@ -33,7 +34,7 @@ abstract class Driver implements DriverInterface
 
     public function isAvailable(): bool
     {
-        return $this->available;
+        return (bool)$this->available;
     }
 
 }

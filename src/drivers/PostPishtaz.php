@@ -4,14 +4,14 @@ namespace Hsy\Shipping\Drivers;
 
 class PostPishtaz extends Driver
 {
-
-    public function checkAvailability()
+    public function checkAvailability(): bool
     {
-        // TODO: Implement checkAvailability() method.
+        return true;
     }
 
-    public function calcCost()
+    public function calcCost(): int
     {
-        // TODO: Implement calcCost() method.
+        $config = $this->configuration;
+        dd($config);
     }
 }
