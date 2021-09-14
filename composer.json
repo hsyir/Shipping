@@ -1,0 +1,28 @@
+{
+  "name": "hsyir/shipping",
+  "description": "",
+  "minimum-stability": "dev",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Hossein Yaghmaee",
+      "email": "Hosseinyaghmarr@gmail.com"
+    }
+  ],
+  "require-dev": {
+    "orchestra/testbench": "7.0.x-dev"
+  },
+  "scripts": {
+    "test": "php vendor/phpunit/phpunit/phpunit"
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Hsy\\Shipping\\Tests\\": "tests"
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "Hsy\\Shipping\\": "src"
+    }
+  }
+}
