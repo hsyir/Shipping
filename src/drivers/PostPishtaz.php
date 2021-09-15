@@ -6,12 +6,11 @@ class PostPishtaz extends Driver
 {
     public function checkAvailability(): bool
     {
-        return true;
+        return false;
     }
 
     public function calcCost(): int
     {
-        $config = $this->configuration;
-        dd($config);
+        return 5000;
     }
 }

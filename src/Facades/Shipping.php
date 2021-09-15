@@ -8,6 +8,6 @@ class Shipping extends \Illuminate\Support\Facades\Facade
 {
     protected static function getFacadeAccessor(): string
     {
-        return ShippingSystem::class;
+        return "Shipping";
     }
 }

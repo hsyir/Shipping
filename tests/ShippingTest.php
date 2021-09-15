@@ -51,7 +51,6 @@ class ShippingTest extends TestCase
                 "out_of_size" => true,
             ]
         ];
-        $cart = new ResolveCart($cart);
 
         $from = 10;
         $to = 10;

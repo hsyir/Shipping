@@ -2,12 +2,9 @@
 
 namespace Hsy\Shipping;
 
-use Hsy\Shipping\Driver\PeykMotori;
-use Hsy\Shipping\Driver\PostPishtaz;
 
 class ShippingSystem
 {
-
     private $cart;
     private $from;
     private $to;
@@ -17,12 +14,43 @@ class ShippingSystem
      */
     private $userConfiguration;
 
+    public function setCart($cart): ShippingSystem
+    {
+        $cartResolverClass = config("shipping.cart-resolver");
+        $this->cart = new $cartResolverClass($cart);
+        return $this;
+    }
+
+    public function setTo($to): ShippingSystem
+    {
+        $this->to = $to;
+        return $this;
+    }
+
+    public function setfrom($from): ShippingSystem
+    {
+        $this->from = $from;
+        return $this;
+    }
+
+    public function setUserConfiguration($userConfiguration): ShippingSystem
+    {
+        $this->userConfiguration = $userConfiguration;
+        return $this;
+    }
+
+    public function setData($cart, $from, $to, $userConfiguration): ShippingSystem
+    {
+        $this->setCart($cart);
+        $this->setfrom($from);
+        $this->setTo($to);
+        $this->setUserConfiguration($userConfiguration);
+        return $this;
+    }
+
     public function __construct($cart, $from, $to, $userConfiguration = [])
     {
-        $this->cart = $cart;
-        $this->from = $from;
-        $this->to = $to;
-        $this->userConfiguration = $userConfiguration;
+        $this->setData($cart, $from, $to, $userConfiguration);
     }
 
     private function getUserSelectedDrivers(): \Illuminate\Support\Collection
@@ -44,6 +72,7 @@ class ShippingSystem
     {
         $class = config("shipping.map." . $driver);
 //        dd($class);
+
         return new $class(
             $this->cart,
             $this->from,
@@ -56,14 +85,12 @@ class ShippingSystem
     {
         $drivers = $this->getUserSelectedDrivers();
 
-        $drivers = $drivers
+        return $drivers
             ->when($onlyAvailableDrivers, function ($drivers) {
                 return $drivers->reject(function ($driver) {
                     return !$driver->isAvailable();
                 });
             });
-
-        return $drivers;
     }
 
 }
